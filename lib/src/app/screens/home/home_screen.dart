@@ -22,115 +22,110 @@ class HomeScreen extends StatelessWidget {
         child: const Icon(Icons.add),
       ),
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 38.0),
-                child: Card(
-                  margin: const EdgeInsets.all(8),
-                  child: SizedBox(
-                    height: Get.height * 0.4,
-                    // color: Colors.white54,
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              "Temps restant : ",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey,
-                              ),
-                            ),
+        child: Column(
+          children: [
+            Card(
+              margin: const EdgeInsets.all(8),
+              child: SizedBox(
+                height: Get.height * 0.4,
+                // color: Colors.white54,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          "Temps restant : ",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Obx(() {
-                                return TimerBlock(
-                                  count: _timerService.days.value,
-                                  suffix: '',
-                                );
-                              }),
+                        ),
+                      ),
+                      Obx(() {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (_timerService.days.value > 0)
+                              TimerBlock(
+                                count: _timerService.days.value,
+                                suffix: '',
+                              ),
+                            if (_timerService.days.value > 0)
                               const SizedBox(width: 5),
+                            if (_timerService.days.value > 0)
                               const Text(
                                 'J',
                                 style: TextStyle(
                                     fontSize: 30, fontWeight: FontWeight.bold),
                               ),
+                            if (_timerService.days.value > 0)
                               const SizedBox(width: 5),
-                              Obx(() {
-                                return TimerBlock(
-                                  count: _timerService.hours.value,
-                                  suffix: '',
-                                );
-                              }),
+                            if (_timerService.hours.value > 0)
+                              TimerBlock(
+                                count: _timerService.hours.value,
+                                suffix: '',
+                              ),
+                            if (_timerService.hours.value > 0)
                               const Text(
                                 ':',
                                 style: TextStyle(
                                     fontSize: 30, fontWeight: FontWeight.bold),
                               ),
-                              // const SizedBox(width: 5),
-                              Obx(() {
-                                return TimerBlock(
-                                  count: _timerService.minutes.value,
-                                  suffix: '',
-                                );
-                              }),
+                            // const SizedBox(width: 5),
+                            if (_timerService.minutes.value > 0)
+                              TimerBlock(
+                                count: _timerService.minutes.value,
+                                suffix: '',
+                              ),
+                            if (_timerService.minutes.value > 0)
                               const Text(
                                 ':',
                                 style: TextStyle(
                                     fontSize: 30, fontWeight: FontWeight.bold),
                               ),
-                              // const SizedBox(width: 5),
-                              Obx(() {
-                                return TimerBlock(
-                                  count: _timerService.seconds.value,
-                                  suffix: '',
-                                );
-                              }),
-                            ],
-                          ),
-                          if (_timerService.currentEvent.value != null)
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Obx(() {
-                                return Text(
-                                  "À : ${DateFormat('dd/MM/yyyy').format(DateTime.parse(_timerService.currentEvent.value!.date!)).toString()}",
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey,
-                                  ),
-                                );
-                              }),
+                            // const SizedBox(width: 5),
+                            TimerBlock(
+                              count: _timerService.seconds.value,
+                              suffix: '',
                             ),
-                          Obx(() {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                  _timerService
-                                          .currentEvent.value?.description ??
-                                      'Smirl Timer',
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 3,
-                                  style: const TextStyle(
-                                      color: Colors.black, fontSize: 16)),
+                          ],
+                        );
+                      }),
+                      if (_timerService.currentEvent.value != null)
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Obx(() {
+                            return Text(
+                              "À : ${DateFormat('dd/MM/yyyy HH:mm:ss').format(DateTime.parse(_timerService.currentEvent.value!.date!)).toString()}",
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
                             );
                           }),
-                        ],
-                      ),
-                    ),
+                        ),
+                      Obx(() {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                              _timerService.currentEvent.value?.description ??
+                                  'Smirl Timer',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 3,
+                              style: const TextStyle(
+                                  color: Colors.black, fontSize: 16)),
+                        );
+                      }),
+                    ],
                   ),
                 ),
               ),
             ),
-            SliverFillRemaining(
+            Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Obx(() {
@@ -145,7 +140,7 @@ class HomeScreen extends StatelessWidget {
                             (evt) => Card(
                               child: ListTile(
                                 title: Text(evt.description!),
-                                subtitle: Text(DateFormat('dd/MM/yyyy')
+                                subtitle: Text(DateFormat('dd/MM/yyyy HH:mm:ss')
                                     .format(DateTime.parse(evt.date!))
                                     .toString()),
                                 onTap: () {
@@ -215,11 +210,11 @@ class HomeScreen extends StatelessWidget {
                 labelText: 'Date',
               ),
               initialValue: DateTime.now(),
-              mode: DateTimeFieldPickerMode.date,
+              // mode: DateTimeFieldPickerMode.date,
               autovalidateMode: AutovalidateMode.always,
               onDateSelected: (DateTime value) {
                 // print(value);
-                event['date'] = DateFormat('yyyy-MM-dd').format(value);
+                event['date'] = DateFormat('yyyy-MM-dd HH:mm:ss').format(value);
               },
             ),
             const SizedBox(height: 10),
@@ -277,11 +272,11 @@ class HomeScreen extends StatelessWidget {
                 labelText: 'Date',
               ),
               initialValue: DateTime.parse(event['date']),
-              mode: DateTimeFieldPickerMode.date,
+              //  mode: DateTimeFieldPickerMode.date,
               autovalidateMode: AutovalidateMode.always,
               onDateSelected: (DateTime value) {
                 // print(value);
-                event['date'] = DateFormat('yyyy-MM-dd').format(value);
+                event['date'] = DateFormat('yyyy-MM-dd HH:mm:ss').format(value);
               },
             ),
             const SizedBox(height: 10),

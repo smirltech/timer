@@ -60,7 +60,7 @@ class TimerService extends GetxService {
 
   selectEvent(EventModel event) {
     currentEvent.value = event;
-    debugPrint('Selected event: ${event.toJson()}');
+    // debugPrint('Selected event: ${event.toJson()}');
   }
 
   onInit() {
