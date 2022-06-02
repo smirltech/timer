@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:smirl_timer/src/app/models/event_model.dart';
 import 'package:smirl_timer/src/app/screens/home/components/timer_block.dart';
+import 'package:counter_card/counter_card.dart';
 
 import '../../services/timer_service.dart';
 
@@ -137,7 +140,23 @@ class HomeScreen extends StatelessWidget {
                   return ListView(
                       children: _timerService.events.value
                           .map(
-                            (evt) => Card(
+                            (evt) => CounterCard(
+                                data: {
+                                  'description': evt.description,
+                                  'date': evt.date,
+                                },
+                                onSelected: () {
+                                  log('Selected event : ${evt.description}');
+                                  _timerService.selectEvent(evt);
+                                },
+                                onEdited: () {
+                                  editOldEvent(evt);
+                                },
+                                onDeleted: () {
+                                  _timerService.deleteEvent(evt);
+                                }),
+
+                            /* Card(
                               child: ListTile(
                                 title: Text(evt.description!),
                                 subtitle: Text(DateFormat('dd/MM/yyyy HH:mm:ss')
@@ -165,7 +184,7 @@ class HomeScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                            ),
+                            ),*/
                           )
                           .toList());
                 }),
