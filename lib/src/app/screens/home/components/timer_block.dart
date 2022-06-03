@@ -2,22 +2,23 @@ import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:flutter/material.dart';
 
 class TimerBlock extends StatelessWidget {
-  const TimerBlock(
+  TimerBlock(
       {Key? key,
       required this.count,
       required this.suffix,
-      this.backgroundColor = Colors.deepPurple,
+      this.backgroundColor,
       this.textColor = Colors.white,
       this.fontSize = 30.0})
       : super(key: key);
   final int count;
   final String suffix;
-  final backgroundColor;
+  var backgroundColor;
   final textColor;
   final fontSize;
 
   @override
   Widget build(BuildContext context) {
+    backgroundColor ??= Theme.of(context).primaryColor;
     return Container(
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(

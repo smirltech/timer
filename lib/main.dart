@@ -21,7 +21,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Smirl Timer',
       theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
+        primarySwatch: Colors.green,
         fontFamily: GoogleFonts.monda().fontFamily,
       ),
       home: HomeScreen(),

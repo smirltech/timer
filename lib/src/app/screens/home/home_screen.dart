@@ -67,24 +67,30 @@ class HomeScreen extends StatelessWidget {
                               ),
                             if (_timerService.days.value > 0)
                               const SizedBox(width: 5),
-                            if (_timerService.hours.value > 0)
+                            if (_timerService.days.value > 0 ||
+                                _timerService.hours.value > 0)
                               TimerBlock(
                                 count: _timerService.hours.value,
                                 suffix: '',
                               ),
-                            if (_timerService.hours.value > 0)
+                            if (_timerService.days.value > 0 ||
+                                _timerService.hours.value > 0)
                               const Text(
                                 ':',
                                 style: TextStyle(
                                     fontSize: 30, fontWeight: FontWeight.bold),
                               ),
                             // const SizedBox(width: 5),
-                            if (_timerService.minutes.value > 0)
+                            if (_timerService.days.value > 0 ||
+                                _timerService.hours.value > 0 ||
+                                _timerService.minutes.value > 0)
                               TimerBlock(
                                 count: _timerService.minutes.value,
                                 suffix: '',
                               ),
-                            if (_timerService.minutes.value > 0)
+                            if (_timerService.days.value > 0 ||
+                                _timerService.hours.value > 0 ||
+                                _timerService.minutes.value > 0)
                               const Text(
                                 ':',
                                 style: TextStyle(
