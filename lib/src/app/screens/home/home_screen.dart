@@ -155,36 +155,6 @@ class HomeScreen extends StatelessWidget {
                                 onDeleted: () {
                                   _timerService.deleteEvent(evt);
                                 }),
-
-                            /* Card(
-                              child: ListTile(
-                                title: Text(evt.description!),
-                                subtitle: Text(DateFormat('dd/MM/yyyy HH:mm:ss')
-                                    .format(DateTime.parse(evt.date!))
-                                    .toString()),
-                                onTap: () {
-                                  _timerService.selectEvent(evt);
-                                },
-                                trailing: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    IconButton(
-                                      icon: const Icon(Icons.edit),
-                                      onPressed: () {
-                                        editOldEvent(evt);
-                                      },
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(Icons.delete),
-                                      onPressed: () {
-                                        _timerService.deleteEvent(evt);
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),*/
                           )
                           .toList());
                 }),
