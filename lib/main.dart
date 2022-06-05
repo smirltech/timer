@@ -1,3 +1,4 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -22,9 +23,19 @@ class App extends StatelessWidget {
       title: 'Smirl Timer',
       theme: ThemeData(
         primarySwatch: Colors.green,
+        backgroundColor: Colors.white60,
         fontFamily: GoogleFonts.monda().fontFamily,
       ),
-      home: HomeScreen(),
+      home: AnimatedSplashScreen(
+        duration: 3000,
+        splash: Image.asset(
+          "assets/images/icons/icon.png",
+        ),
+        nextScreen: HomeScreen(),
+        backgroundColor: Colors.green.shade400,
+        splashTransition: SplashTransition.fadeTransition,
+        //pageTransitionType: PageTransitionType.scale,
+      ),
     );
   }
 }

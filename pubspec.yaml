@@ -16,10 +16,14 @@ dependencies:
   path_provider: ^2.0.10
   intl: ^0.17.0
   animated_flip_counter: ^0.2.4
-  cupertino_icons: ^1.0.4
+  cupertino_icons: ^1.0.5
   get: ^4.6.5
   get_storage: ^2.0.3
   date_field: ^3.0.1
+
+  animated_splash_screen: ^1.2.0
+  # page_transition: ^2.0.5
+
   counter_card:
     path: packages/counter_card
 
@@ -31,3 +35,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/images/
+    - assets/images/icons/
