@@ -10,6 +10,7 @@ import 'package:smirl_timer/src/app/screens/home/components/timer_block.dart';
 import 'package:counter_card/counter_card.dart';
 
 import '../../services/timer_service.dart';
+import '../events/events_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final _timerService = Get.find<TimerService>();
@@ -30,7 +31,7 @@ class HomeScreen extends StatelessWidget {
             Card(
               margin: const EdgeInsets.all(8),
               child: SizedBox(
-                height: Get.height * 0.4,
+                height: Get.height * 0.30,
                 // color: Colors.white54,
                 child: Center(
                   child: Column(
@@ -134,6 +135,33 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Evénements",
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  TextButton(
+                    child: const Text(
+                      "Voir tous >>",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () {
+                      Get.to(() => EventsScreen());
+                    },
+                  ),
+                ],
+              ),
+            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
@@ -145,11 +173,13 @@ class HomeScreen extends StatelessWidget {
                   }
                   return ListView(
                       children: _timerService.events.value
+                          .where((p0) => p0.isDone == false)
                           .map(
                             (evt) => CounterCard(
                                 data: {
                                   'description': evt.description,
                                   'date': evt.date,
+                                  'isDone': evt.isDone,
                                 },
                                 onSelected: () {
                                   log('Selected event : ${evt.description}');
