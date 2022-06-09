@@ -56,7 +56,7 @@ class EventsScreen extends StatelessWidget {
                           'isDone': evt.isDone,
                         },
                         onSelected: () {
-                          log('Selected event : ${evt.description}');
+                          // log('Selected event : ${evt.description}');
                           _timerService.selectEvent(evt);
                         },
                         onEdited: () {

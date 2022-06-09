@@ -16,10 +16,10 @@ class EventModel {
       DateTime dn = DateTime.parse(this.date!);
       if (dn.isBefore(DateTime.now())) {
         this.isDone = true;
-        print("is done :::${this.isDone!}");
+        //  print("is done :::${this.isDone!}");
       }
     } catch (e) {
-      print(this.timeStamp! + " ::::: " + e.toString());
+      // print(this.timeStamp! + " ::::: " + e.toString());
     }
   }
 
@@ -34,10 +34,10 @@ class EventModel {
       DateTime dn = DateTime.parse(em.date!);
       if (dn.isBefore(DateTime.now())) {
         em.isDone = true;
-        print("is done :::${em.isDone!}");
+        //   print("is done :::${em.isDone!}");
       }
     } catch (e) {
-      print(em.timeStamp! + " ::: " + e.toString());
+      // print(em.timeStamp! + " ::: " + e.toString());
     }
     return em;
   }
