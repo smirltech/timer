@@ -27,7 +27,7 @@ class App extends StatelessWidget {
         fontFamily: GoogleFonts.monda().fontFamily,
       ),
       home: AnimatedSplashScreen(
-        duration: 3000,
+        duration: 1000,
         splash: Image.asset(
           "assets/images/icons/icon.png",
         ),
