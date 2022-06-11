@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:smirl_timer/src/app/models/event_model.dart';
 import 'package:smirl_timer/src/app/screens/home/components/timer_block.dart';
 import 'package:counter_card/counter_card.dart';
+import 'package:smirl_timer/src/system/components/date_form_field.dart';
 
 import '../../services/timer_service.dart';
 import '../events/events_screen.dart';
@@ -226,7 +224,16 @@ class HomeScreen extends StatelessWidget {
                 event['description'] = value;
               },
             ),
-            DateTimeFormField(
+            const SizedBox(height: 10),
+            DateFormField(
+              label: 'Date',
+              type: DateFormFieldType.datetime,
+              dateDisplayFormat: 'dd/MM/yyyy HH:mm:ss',
+              onDateChanged: (date) {
+                event['date'] = DateFormat('yyyy-MM-dd HH:mm:ss').format(date);
+              },
+            ),
+            /* DateTimeFormField(
               decoration: const InputDecoration(
                 hintStyle: TextStyle(color: Colors.black45),
                 errorStyle: TextStyle(color: Colors.redAccent),
@@ -241,8 +248,8 @@ class HomeScreen extends StatelessWidget {
                 // print(value);
                 event['date'] = DateFormat('yyyy-MM-dd HH:mm:ss').format(value);
               },
-            ),
-            const SizedBox(height: 10),
+            ),*/
+            const SizedBox(height: 5),
             ElevatedButton(
               child: const Text('Enregistrer'),
               onPressed: () {
@@ -255,7 +262,7 @@ class HomeScreen extends StatelessWidget {
                 Get.back();
               },
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
           ],
         ),
       ),
