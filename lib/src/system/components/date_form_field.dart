@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -76,22 +78,17 @@ class DateFormField extends StatelessWidget {
                   initialTime: TimeOfDay.fromDateTime(initialDate!),
                 ).then((time) {
                   if (time != null) {
-                    onDateChanged(DateTime(
+                    DateTime tt = DateTime(
                       initialDate!.year,
                       initialDate!.month,
                       initialDate!.day,
                       time.hour,
                       time.minute,
-                    ));
-                    _controller.text = DateFormat('HH:mm').format(
-                      DateTime(
-                        initialDate!.year,
-                        initialDate!.month,
-                        initialDate!.day,
-                        time.hour,
-                        time.minute,
-                      ),
                     );
+                    _controller.text = DateFormat('HH:mm').format(
+                      tt,
+                    );
+                    onDateChanged(tt);
                   }
                 });
               }
@@ -103,30 +100,19 @@ class DateFormField extends StatelessWidget {
                   firstDate: firstDate!,
                   lastDate: lastDate!,
                 ).then((date) {
-                  if (date != null) {
-                    // onDateChanged(date);
-                    // _controller.text =
-                    //     DateFormat(dateDisplayFormat).format(date);
-                  }
                   showTimePicker(
                     context: context,
-                    initialTime: TimeOfDay.fromDateTime(initialDate!),
+                    initialTime: TimeOfDay.fromDateTime(date!),
                   ).then((time) {
                     if (time != null) {
-                      onDateChanged(DateTime(
-                        initialDate!.year,
-                        initialDate!.month,
-                        initialDate!.day,
-                        time.hour,
-                        time.minute,
-                      ));
                       DateTime dd = DateTime(
-                        date!.year,
+                        date.year,
                         date.month,
                         date.day,
                         time.hour,
                         time.minute,
                       );
+                      onDateChanged(dd);
                       _controller.text = DateFormat(dateDisplayFormat).format(
                         dd,
                       );

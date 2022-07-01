@@ -1,13 +1,13 @@
-import 'dart:developer';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:smirl_timer/src/app/models/event_model.dart';
 import '../../system/helpers.dart';
+import '../api/boxes.dart';
 
 class TimerService extends GetxService {
+  late Box<EventModel> box;
   var seconds = 0.obs;
   var minutes = 0.obs;
   var hours = 0.obs;
@@ -32,25 +32,11 @@ class TimerService extends GetxService {
   }
 
   addEvent(EventModel event) {
-    List<dynamic> evts = GetStorage().read('events');
-    evts.add(event.toJson());
-    GetStorage().write('events', evts);
-    // events.value.add(event);
-    //events.refresh();
+    box.add(event);
   }
 
   editEvent(EventModel event) {
-    List<dynamic> evts = GetStorage().read('events');
-    evts.forEach((element) {
-      if (element['timeStamp'] == event.timeStamp) {
-        element['description'] = event.description;
-        element['date'] = event.date;
-        element['isDone'] = event.isDone;
-      }
-    });
-    GetStorage().write('events', evts);
-    // events.value.add(event);
-    //events.refresh();
+    event.save();
   }
 
   deleteEvent(EventModel event) {
@@ -72,57 +58,46 @@ class TimerService extends GetxService {
             primary: Colors.red,
           ),
           onPressed: () {
-            List<dynamic> evts = GetStorage().read('events');
-            int idx = evts.indexWhere((element) {
-              return element['timeStamp'] == event.timeStamp;
-            });
-            evts.removeWhere((element) {
-              return element['timeStamp'] == event.timeStamp;
-            });
-            if (evts.isEmpty) {
-              currentEvent.value = null;
-            } else {
-              currentEvent.value = EventModel.fromJson(evts[0]);
-            }
-
-            /*else if (events.value.length - 1 < idx) {
-              currentEvent.value =
-                  EventModel.fromJson(evts[events.value.length - 1]);
-            }*/
-            /*else {
-              if (idx == 0) {
-                currentEvent.value = EventModel.fromJson(evts[0]);
-              } else {
-                currentEvent.value = EventModel.fromJson(evts[idx - 1]);
-              }
-            }*/
-            GetStorage().write('events', evts);
+            event.delete();
             Get.back();
           },
           child: const Text('Supprimer'),
         ),
       ],
     );
-    /*  List<dynamic> evts = GetStorage().read('events');
-    evts.removeWhere((element) => element['timeStamp'] == event.timeStamp);
-    GetStorage().write('events', evts);*/
   }
 
   selectEvent(EventModel event) {
     currentEvent.value = event;
-    // debugPrint('Selected event: ${event.toJson()}');
   }
 
-  onInit() {
-    if (GetStorage().read('events') == null) {
-      GetStorage().write('events', []);
-    }
-    events.value = EventModel.fromJsonList(GetStorage().read('events'));
-    if (events.value.isNotEmpty) currentEvent.value = events.value.first;
+  onInit() async {
+    await Hive.openBox<EventModel>(EventModel.table_name);
+    box = Boxes.getEvents();
     super.onInit();
-    GetStorage().listenKey('events', (evts) {
-      events.value = EventModel.fromJsonList(evts);
-    });
+
+    readAllEvents();
     start();
+  }
+
+  readAllEvents() async {
+    //  isLoading.value = true;
+    final _box = box.listenable();
+    events.value = _box.value.values.toList();
+    events.value.sort((a, b) {
+      DateTime dnA = DateTime.parse(a.date!);
+      DateTime dnB = DateTime.parse(b.date!);
+      return dnA.compareTo(dnB);
+    });
+    _box.addListener(() {
+      events.value = _box.value.values.toList();
+      events.value.sort((a, b) {
+        DateTime dnA = DateTime.parse(a.date!);
+        DateTime dnB = DateTime.parse(b.date!);
+        return dnA.compareTo(dnB);
+      });
+    });
+    //  if (events.value.isNotEmpty) currentEvent.value = events.value.first;
+    // isLoading.value = false;
   }
 }

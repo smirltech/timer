@@ -13,7 +13,7 @@ dependencies:
 
   fluttericon: ^2.0.0
   google_fonts: ^3.0.1
-  path_provider: ^2.0.10
+  path_provider: ^2.0.11
   intl: ^0.17.0
   animated_flip_counter: ^0.2.4
   cupertino_icons: ^1.0.5
@@ -24,12 +24,20 @@ dependencies:
   animated_splash_screen: ^1.2.0
   # page_transition: ^2.0.5
 
+  # Hive packages
+  hive: ^2.2.2
+  hive_flutter: ^1.1.0
+
   counter_card:
     path: packages/counter_card
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  # Hive generator
+  hive_generator: ^1.1.3
+  build_runner: ^2.1.11
 
   flutter_lints: ^2.0.1
 

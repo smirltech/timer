@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -180,7 +182,7 @@ class HomeScreen extends StatelessWidget {
                                   'isDone': evt.isDone,
                                 },
                                 onSelected: () {
-                                  // log('Selected event : ${evt.description}');
+                                  log('Selected event : ${evt.date}');
                                   _timerService.selectEvent(evt);
                                 },
                                 onEdited: () {
@@ -212,10 +214,10 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             const Text("Ajouter nouvel événement",
                 style: TextStyle(fontSize: 20)),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             TextField(
               decoration: const InputDecoration(
                 labelText: 'Description',
@@ -224,7 +226,7 @@ class HomeScreen extends StatelessWidget {
                 event['description'] = value;
               },
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             DateFormField(
               label: 'Date',
               type: DateFormFieldType.datetime,
@@ -233,22 +235,6 @@ class HomeScreen extends StatelessWidget {
                 event['date'] = DateFormat('yyyy-MM-dd HH:mm:ss').format(date);
               },
             ),
-            /* DateTimeFormField(
-              decoration: const InputDecoration(
-                hintStyle: TextStyle(color: Colors.black45),
-                errorStyle: TextStyle(color: Colors.redAccent),
-                //border: OutlineInputBorder(),
-                suffixIcon: Icon(Icons.event_note),
-                labelText: 'Date',
-              ),
-              initialValue: DateTime.now(),
-              // mode: DateTimeFieldPickerMode.date,
-              autovalidateMode: AutovalidateMode.always,
-              onDateSelected: (DateTime value) {
-                // print(value);
-                event['date'] = DateFormat('yyyy-MM-dd HH:mm:ss').format(value);
-              },
-            ),*/
             const SizedBox(height: 5),
             ElevatedButton(
               child: const Text('Enregistrer'),

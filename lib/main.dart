@@ -3,11 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+import 'package:smirl_timer/src/app/models/event_model.dart';
 import 'package:smirl_timer/src/app/screens/home/home_screen.dart';
 import 'package:smirl_timer/src/app/services/services.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(EventModelAdapter());
   await GetStorage.init();
   await Services.init();
   runApp(const App());
