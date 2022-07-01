@@ -301,11 +301,12 @@ class HomeScreen extends StatelessWidget {
             ElevatedButton(
               child: const Text('Confirmer'),
               onPressed: () {
-                _timerService.editEvent(EventModel(
-                    description: event['description'],
-                    date: event['date'],
-                    isDone: event['isDone'],
-                    timeStamp: event['timeStamp']));
+                eventModel.description = event['description']
+                  ..date = event['date']
+                  ..isDone = event['isDone']
+                  ..timeStamp = event['timeStamp'];
+
+                _timerService.editEvent(eventModel);
                 Get.back();
               },
             ),

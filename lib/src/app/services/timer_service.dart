@@ -31,15 +31,15 @@ class TimerService extends GetxService {
     }).listen((_) {});
   }
 
-  addEvent(EventModel event) {
+  addEvent(EventModel event) async {
     box.add(event);
   }
 
-  editEvent(EventModel event) {
+  editEvent(EventModel event) async {
     event.save();
   }
 
-  deleteEvent(EventModel event) {
+  deleteEvent(EventModel event) async {
     Get.defaultDialog(
       title: "Supprimer l'événement ?",
       content: const Text("Êtes-vous sûr de vouloir supprimer cet événement ?"),

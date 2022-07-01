@@ -104,19 +104,17 @@ class DateFormField extends StatelessWidget {
                     context: context,
                     initialTime: TimeOfDay.fromDateTime(date!),
                   ).then((time) {
-                    if (time != null) {
-                      DateTime dd = DateTime(
-                        date.year,
-                        date.month,
-                        date.day,
-                        time.hour,
-                        time.minute,
-                      );
-                      onDateChanged(dd);
-                      _controller.text = DateFormat(dateDisplayFormat).format(
-                        dd,
-                      );
-                    }
+                    DateTime dd = DateTime(
+                      date.year,
+                      date.month,
+                      date.day,
+                      time!.hour,
+                      time.minute,
+                    );
+                    onDateChanged(dd);
+                    _controller.text = DateFormat(dateDisplayFormat).format(
+                      dd,
+                    );
                   });
                 });
               }
