@@ -3,12 +3,14 @@ import 'dart:developer';
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_time_ago/get_time_ago.dart';
 import 'package:intl/intl.dart';
 import 'package:smirl_timer/src/app/models/event_model.dart';
 import 'package:smirl_timer/src/app/screens/home/components/timer_block.dart';
 import 'package:counter_card/counter_card.dart';
 import 'package:smirl_timer/src/system/components/date_form_field.dart';
 
+import '../../../../main.dart';
 import '../../services/timer_service.dart';
 import '../events/events_screen.dart';
 
@@ -180,6 +182,7 @@ class HomeScreen extends StatelessWidget {
                                   'description': evt.description,
                                   'date': evt.date,
                                   'isDone': evt.isDone,
+                                  'timeLeft': evt.getTimeLeft(),
                                 },
                                 onSelected: () {
                                   log('Selected event : ${evt.date}');
@@ -205,7 +208,7 @@ class HomeScreen extends StatelessWidget {
   addNewEvent() {
     Map<String, dynamic> event = {
       'description': '',
-      'date': '',
+      'date': DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
       'isDone': false,
     };
     Get.bottomSheet(
@@ -240,6 +243,7 @@ class HomeScreen extends StatelessWidget {
               child: const Text('Enregistrer'),
               onPressed: () {
                 _timerService.addEvent(EventModel(
+                    id: UUID.v4().toString(),
                     description: event['description'],
                     date: event['date'],
                     isDone: event['isDone'],
@@ -301,10 +305,10 @@ class HomeScreen extends StatelessWidget {
             ElevatedButton(
               child: const Text('Confirmer'),
               onPressed: () {
-                eventModel.description = event['description']
-                  ..date = event['date']
-                  ..isDone = event['isDone']
-                  ..timeStamp = event['timeStamp'];
+                eventModel.description = event['description'];
+                eventModel.date = event['date'];
+                eventModel.isDone = event['isDone'];
+                eventModel.timeStamp = event['timeStamp'];
 
                 _timerService.editEvent(eventModel);
                 Get.back();

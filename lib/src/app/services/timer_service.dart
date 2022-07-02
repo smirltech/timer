@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:smirl_timer/src/app/models/event_model.dart';
+import '../../../main.dart';
 import '../../system/helpers.dart';
 import '../api/boxes.dart';
 
@@ -32,7 +35,11 @@ class TimerService extends GetxService {
   }
 
   addEvent(EventModel event) async {
-    box.add(event);
+    box.put(event.id, event);
+  }
+
+  Future<EventModel?> getEvent(String event_id) async {
+    return box.get(event_id);
   }
 
   editEvent(EventModel event) async {
@@ -67,10 +74,41 @@ class TimerService extends GetxService {
     );
   }
 
-  selectEvent(EventModel event) {
-    currentEvent.value = event;
+  deleteAllEvents() async {
+    Get.defaultDialog(
+      title: "Supprimer tous lesévénements ?",
+      content: const Text(
+          "Êtes-vous sûr de vouloir supprimer tous les événements ?"),
+      actions: [
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.grey,
+          ),
+          child: const Text('Cancel'),
+          onPressed: () {
+            Get.back();
+          },
+        ),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.red,
+          ),
+          onPressed: () {
+            box.clear();
+            Get.back();
+          },
+          child: const Text('Supprimer'),
+        ),
+      ],
+    );
   }
 
+  selectEvent(EventModel event) {
+    currentEvent.value = event;
+    //log("Selected event: ${event.id}");
+  }
+
+  @override
   onInit() async {
     await Hive.openBox<EventModel>(EventModel.table_name);
     box = Boxes.getEvents();
@@ -78,6 +116,12 @@ class TimerService extends GetxService {
 
     readAllEvents();
     start();
+  }
+
+  @override
+  onClose() async {
+    await Hive.close();
+    super.onClose();
   }
 
   readAllEvents() async {

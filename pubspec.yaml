@@ -20,6 +20,7 @@ dependencies:
   get: ^4.6.5
   get_storage: ^2.0.3
   date_field: ^3.0.1
+  get_time_ago: ^1.1.4
 
   animated_splash_screen: ^1.2.0
   # page_transition: ^2.0.5
@@ -34,6 +35,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  uuid: ^3.0.6
 
   # Hive generator
   hive_generator: ^1.1.3

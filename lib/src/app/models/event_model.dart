@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:get_time_ago/get_time_ago.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
@@ -18,12 +19,15 @@ class EventModel extends HiveObject {
   bool? isDone = false;
   @HiveField(3)
   String? timeStamp;
+  @HiveField(4)
+  String? id;
 
   EventModel({
     this.description,
     this.date,
     this.isDone,
     this.timeStamp,
+    this.id,
   }) {
     try {
       DateTime now = DateTime.now();
@@ -31,49 +35,12 @@ class EventModel extends HiveObject {
       // log("old date: $old, new date: $now");
       if (old.isBefore(now)) {
         this.isDone = true;
-        //  print("is done :::${this.isDone!}");
       }
-    } catch (e) {
-      // print(this.timeStamp! + " ::::: " + e.toString());
-    }
+    } catch (e) {}
   }
 
-  static EventModel fromJson(Map<String, dynamic> json) {
-    EventModel em = EventModel(
-      description: json["description"],
-      date: json["date"],
-      isDone: json["isDone"],
-      timeStamp: json["timeStamp"],
-    );
-    try {
-      DateTime dn = DateTime.parse(em.date!);
-      if (dn.isBefore(DateTime.now())) {
-        em.isDone = true;
-        //   print("is done :::${em.isDone!}");
-      }
-    } catch (e) {
-      // print(em.timeStamp! + " ::: " + e.toString());
-    }
-    return em;
-  }
-
-  toJson() {
-    return {
-      'description': description,
-      'date': date,
-      'isDone': isDone,
-      'timeStamp': timeStamp,
-    };
-  }
-
-  static List<EventModel> fromJsonList(List<dynamic> jsonList) {
-    List<EventModel> list =
-        jsonList.map((e) => EventModel.fromJson(e)).toList();
-    list.sort((a, b) {
-      DateTime dnA = DateTime.parse(a.date!);
-      DateTime dnB = DateTime.parse(b.date!);
-      return dnB.compareTo(dnA);
-    });
-    return list;
+  getTimeLeft() {
+    DateTime old = DateTime.parse(date!);
+    return GetTimeAgo.parse(old);
   }
 }

@@ -47,6 +47,10 @@ class CounterCard extends StatelessWidget {
         ),
         child: ListTile(
           tileColor: data['isDone'] ? Colors.blueGrey[100] : null,
+          leading: Icon(
+            data['isDone'] ? Icons.check : Icons.check_box_outline_blank,
+            color: data['isDone'] ? Colors.green : Colors.grey,
+          ),
           title: Text(
             data['description']!,
             style: TextStyle(
@@ -60,11 +64,7 @@ class CounterCard extends StatelessWidget {
                 decoration: data['isDone'] ? TextDecoration.lineThrough : null),
           ),
           onTap: data['isDone'] ? null : onSelected,
-          trailing: data['isDone'] == null
-              ? null
-              : data['isDone']
-                  ? const Icon(Icons.check)
-                  : null,
+          //    trailing: Text(data['timeLeft']),
         ),
       ),
     );

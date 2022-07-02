@@ -2,15 +2,20 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:get_time_ago/get_time_ago.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:smirl_timer/src/app/models/event_model.dart';
 import 'package:smirl_timer/src/app/screens/home/home_screen.dart';
 import 'package:smirl_timer/src/app/services/services.dart';
+import 'package:uuid/uuid.dart';
+
+var UUID = const Uuid();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  GetTimeAgo.setDefaultLocale('fr');
   await Hive.initFlutter();
   Hive.registerAdapter(EventModelAdapter());
   await GetStorage.init();

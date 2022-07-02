@@ -21,13 +21,14 @@ class EventModelAdapter extends TypeAdapter<EventModel> {
       date: fields[1] as String?,
       isDone: fields[2] as bool?,
       timeStamp: fields[3] as String?,
+      id: fields[4] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, EventModel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.description)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class EventModelAdapter extends TypeAdapter<EventModel> {
       ..writeByte(2)
       ..write(obj.isDone)
       ..writeByte(3)
-      ..write(obj.timeStamp);
+      ..write(obj.timeStamp)
+      ..writeByte(4)
+      ..write(obj.id);
   }
 
   @override

@@ -29,7 +29,12 @@ class EventsScreen extends StatelessWidget {
                 style: const TextStyle(fontSize: 20, color: Colors.white),
               );
             }),
-          )
+          ),
+          IconButton(
+              onPressed: () {
+                _timerService.deleteAllEvents();
+              },
+              icon: const Icon(Icons.delete)),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -54,6 +59,7 @@ class EventsScreen extends StatelessWidget {
                           'description': evt.description,
                           'date': evt.date,
                           'isDone': evt.isDone,
+                          'timeLeft': evt.getTimeLeft(),
                         },
                         onSelected: () {
                           // log('Selected event : ${evt.description}');
